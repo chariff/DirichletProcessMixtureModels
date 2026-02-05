@@ -5,7 +5,7 @@ import sys
 
 import numpy as np
 
-from scipy.stats import (beta, gamma, multivariate_normal,
+from scipy.stats import (beta, gamma, norm, multivariate_normal,
                          uniform, invwishart, wishart)
 from scipy.special import (loggamma, polygamma, ndtr, ndtri)
 from scipy.linalg import cholesky, eigvalsh
@@ -307,7 +307,7 @@ def _structured_niw_rvs(loc, shape, scale, w_loc_shape, degrees_of_freedom, dim,
 
     scale = invwishart.rvs(df=degrees_of_freedom, scale=scale,
                            random_state=random_state)
-    rns = multivariate_normal.rvs(size=dim * 2, random_state=random_state)
+    rns = norm.rvs(size=dim * 2, random_state=random_state)
     loc_shape = np.hstack((loc, shape)) + \
                 rns @ cholesky(np.kron(w_loc_shape, scale), lower=False)
     loc, shape = loc_shape[:dim], loc_shape[dim:]
@@ -675,15 +675,15 @@ class BayesianSkewtMixture(GibbsSamplingMixture):
 
         # skewt parameters
         self.locs_ = np.empty(shape=(self.max_components, self.dim_),
-                              dtype=np.float64)
+                              dtype=float)
         self.shapes_ = np.empty(shape=(self.max_components, self.dim_),
-                                dtype=np.float64)
+                                dtype=float)
         self.scales_ = \
             np.empty(shape=(self.max_components, self.dim_, self.dim_),
-                     dtype=np.float64)
+                     dtype=float)
         self.scales_invs_ = \
             np.zeros(shape=(self.max_components, self.dim_, self.dim_),
-                     dtype=np.float64)
+                     dtype=float)
         self.degrees_of_freedoms_ = \
             np.repeat(float(self.degrees_of_freedom_prior_), self.max_components)
 
@@ -1226,11 +1226,6 @@ class BayesianSkewtMixture(GibbsSamplingMixture):
         labels : array of shape (n_observations, )
             Predicted partition.
 
-        Note
-        ------
-        Due to the nature of the slice sampling, this function may be slightly unstable.
-        For instance. If one tries to predict the same data used for training, a
-        slightly different partition may result.
         """
         map_locs = map_params['locs']
         map_shapes = map_params['shapes']
