@@ -280,7 +280,7 @@ class GibbsSamplingMixture(metaclass=ABCMeta):
         self._initialize_parameters(X, random_state)
 
         n_burn_in = self.burn_in
-        logposterior = -np.infty
+        logposterior = -np.inf
 
         # burn-in period
         self._print_verbose_msg_beg('burn-in')
