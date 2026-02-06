@@ -317,9 +317,6 @@ class BayesianGaussianMixture(GibbsSamplingMixture):
         If a matrix to be inverted happens to be singular, the pseudo-inverse
         is computed instead.
 
-    cdf_approx : bool, optional
-            Whether to compute an approximation of the student cdf.
-
     random_state : boolean, default=None
         Optional, random seed used to initialize the pseudorandom number generator.
         If the random seed is None np.random.randint is used to generate a seed.
@@ -385,7 +382,7 @@ class BayesianGaussianMixture(GibbsSamplingMixture):
                  degrees_of_freedom_prior=None,
                  alpha_a_prior=1e-3, alpha_b_prior=1e-3, 
                  allow_singular=True,
-                 cdf_approx=True, random_state=None,
+                 random_state=None,
                  verbose=0, verbose_interval=10):
         super().__init__(
             max_iter=max_iter, burn_in=burn_in,
@@ -403,8 +400,7 @@ class BayesianGaussianMixture(GibbsSamplingMixture):
         self.alpha_b_prior = alpha_b_prior
 
         self.allow_singular = allow_singular
-
-        self.cdf_approx = cdf_approx
+ 
 
     def _check_parameters(self, X):
         """Check that the parameters are well defined.
