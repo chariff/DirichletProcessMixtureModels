@@ -130,9 +130,6 @@ In the following section we will show an example of how to use the sampled parti
 the clustering uncertainty.
 
 
-MAP partition.
-![MAP partition](https://github.com/chariff/BayesianMixtures/raw/master/examples/MAP_partition_overlap_1.png)
-
 The following function is to calculate an average of the co-clustering
 matrices from the sampled partitions to obtain the posterior co-clustering probabilities.
 ```python
