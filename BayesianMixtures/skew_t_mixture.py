@@ -1233,7 +1233,7 @@ class BayesianSkewtMixture(GibbsSamplingMixture):
         map_dfs = map_params['degrees_of_freedoms']
 
         n_observations, _ = X.shape
-        n_components = len(map_params)
+        n_components = len(map_locs)
         clusters_pdfs = np.zeros(shape=(n_components, n_observations), dtype=float)
         set_map_labels = np.empty(n_components, dtype=int)
         for i, (key, map_loc) in enumerate(map_locs.items()):
